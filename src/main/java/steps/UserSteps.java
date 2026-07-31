@@ -1,15 +1,16 @@
-package Steps;
+package steps;
 
-import Models.UserModel;
+import models.UserLoginModel;
+import models.UserModel;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
 
-import static Data.UserData.*;
+import static data.UserData.*;
 import static io.restassured.RestAssured.*;
 
 public class UserSteps {
 
-    @Step("Создание пользователя: {user}")
+    @Step("Создание пользователя.")
     public static void userCreating(UserModel user) {
         given()
                 .header("Content-type", "application/json")
@@ -19,22 +20,22 @@ public class UserSteps {
                 .post(USER_REGISTER_API);
     }
 
-    @Step
-    public static Response userLogin(UserModel userModel){
-        String jsonBody = String.format("{\"email\":\"%s\",\"password\":\"%s\"}", USER_EMAIL, CORRECT_USER_PASSWORD);
+    @Step("Авторизация пользователя.")
+    public static Response userLogin(){
+        UserLoginModel userLoginModel = new UserLoginModel(USER_EMAIL, CORRECT_USER_PASSWORD);
         return given()
                 .header("Content-type", "application/json")
                 .and()
-                .body(jsonBody)
+                .body(userLoginModel)
                 .when()
                 .post(USER_LOGIN_API)
                 .then()
                 .extract().response();
     }
 
-    @Step
+    @Step("Удаление пользователя")
     public static void userDelete(UserModel userModel){
-        String fullAccessToken = userLogin(userModel).path("accessToken").toString();
+        String fullAccessToken = userLogin().path("accessToken").toString();
         String accessToken = fullAccessToken.substring(7);
         given()
                 .auth().oauth2(accessToken)

@@ -2,7 +2,7 @@ import io.qameta.allure.junit4.DisplayName;
 import jdk.jfr.Description;
 import org.junit.Test;
 
-import static Data.UserData.*;
+import static data.UserData.*;
 import static org.junit.Assert.assertTrue;
 public class RegistrationTests extends BaseUiTest{
 
@@ -17,7 +17,6 @@ public class RegistrationTests extends BaseUiTest{
         loginPage.registerButtonClick();
         assertTrue(registrationPage.isOpened());
         registrationPage.fillUserDataFields(USER_NAME, USER_EMAIL, CORRECT_USER_PASSWORD);
-//        System.out.println(USER_NAME +"   "+  USER_EMAIL +"   "+ CORRECT_USER_PASSWORD);
         registrationPage.registerButtonClick();
         assertTrue(loginPage.isOpened());
     }

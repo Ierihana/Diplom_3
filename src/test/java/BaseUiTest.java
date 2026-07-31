@@ -1,5 +1,5 @@
-import Models.UserModel;
-import Pages.*;
+import models.UserModel;
+import pages.*;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.After;
 import org.junit.Before;
@@ -16,12 +16,26 @@ public class BaseUiTest {
 
     @Before
     public void setUp(){
-        startChromeBrowser();
+        String browser = System.getProperty("browser", "chrome");
+        if (browser.equalsIgnoreCase("chrome")){
+            startChromeBrowser();
+        }else {
+            startYandexBrowser();
+        }
     }
 
     public void startChromeBrowser(){
-        driver = new ChromeDriver();
         WebDriverManager.chromedriver().setup();
+        driver = new ChromeDriver();
+        mainPage = new MainPage(driver);
+        loginPage = new LoginPage(driver);
+        registrationPage = new RegistrationPage(driver);
+        forgotPasswordPage = new ForgotPasswordPage(driver);
+    }
+
+    public void startYandexBrowser(){
+        System.setProperty("webdriver.chrome.driver", "C:/Users/julia/Downloads/yandexdriver-26.6.0.1742-win64/yandexdriver.exe");
+        driver = new ChromeDriver();
         mainPage = new MainPage(driver);
         loginPage = new LoginPage(driver);
         registrationPage = new RegistrationPage(driver);

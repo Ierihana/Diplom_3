@@ -1,5 +1,6 @@
-package Pages;
+package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -26,56 +27,58 @@ public class MainPage {
     public MainPage(WebDriver driver){
         this.driver = driver;
     }
-
+    @Step("Открытие главной страницы")
     public void open(){
         String URL = "https://stellarburgers.education-services.ru";
         driver.get(URL);
     }
 
+    @Step("Клик по элементу {locator}")
     public void elementClick(By locator){
         wait = new WebDriverWait(driver, Duration.ofSeconds(3));
         wait.until(ExpectedConditions.elementToBeClickable(locator)).click();
     }
 
-
+    @Step("Клик по кнопке Личный кабинет")
     public void personalAccountButtonClick(){
         elementClick(personalAccountButton);
     }
-
+    @Step("Клик по кнопке Войти в аккаунт")
     public void loginAccountButtonClick(){
         elementClick(loginAccountButton);
     }
-
+    @Step("Переход к разделу «Булки»")
     public void bunConstructionSectionClick(){
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
         WebElement element = wait.until(ExpectedConditions.elementToBeClickable(bunConstructionSection));
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
     }
 
+    @Step("Проверка видимости раздела «Булки»")
     public boolean isBunSectionOpen(){
         wait = new WebDriverWait(driver, Duration.ofSeconds(3));
         WebElement openedBunSection = wait.until(ExpectedConditions.visibilityOfElementLocated(bunSectionIsOpen));
         return openedBunSection.isDisplayed();
     }
-
+    @Step("Переход к разделу «Соусы»")
     public void saucesConstructionSectionClick(){
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
         WebElement element = wait.until(ExpectedConditions.elementToBeClickable(saucesConstructionSection));
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
     }
-
+    @Step("Проверка видимости раздела «Соусы»")
     public boolean isSaucesSectionOpen(){
         wait = new WebDriverWait(driver, Duration.ofSeconds(3));
         WebElement openedSaucesSection = wait.until(ExpectedConditions.visibilityOfElementLocated(saucesSectionIsOpen));
         return openedSaucesSection.isDisplayed();
     }
-
+    @Step("Переход к разделу «Начинки»")
     public void fillingConstructionSectionClick(){
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
         WebElement element = wait.until(ExpectedConditions.elementToBeClickable(fillingConstructionSection));
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
     }
-
+    @Step("Проверка видимости раздела «Начинки»")
     public boolean isFillingSectionOpen(){
         wait = new WebDriverWait(driver, Duration.ofSeconds(3));
         WebElement openedFillingSection = wait.until(ExpectedConditions.visibilityOfElementLocated(fillingSectionIsOpen));
